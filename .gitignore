@@ -1,0 +1,5 @@
+/target
+/sample/*.jpg
+/sample/*.png
+/sample/*.py
+.idea/
