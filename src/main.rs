@@ -111,10 +111,10 @@ fn calculate_closest_color(colors: &Colors, r: u8, g: u8, b: u8) -> usize {
     let mut count = 0;
     for color in colors.colors.iter() {
         let mut r_dist = (color.r as f32 - r as f32) * 0.3;
-        r_dist = r_dist * r_dist;
         let mut g_dist = (color.g as f32 - g as f32) * 0.59;
-        g_dist = g_dist * g_dist;
         let mut b_dist = (color.b as f32 - b as f32) * 0.11;
+        r_dist = r_dist * r_dist;
+        g_dist = g_dist * g_dist;
         b_dist = b_dist * b_dist;
 
         let dist = r_dist + g_dist + b_dist;
