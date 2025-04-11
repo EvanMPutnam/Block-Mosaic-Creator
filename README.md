@@ -9,6 +9,6 @@ cargo build
 
 ### Before
 ![](media/me.png)
-c
+
 ### After
 ![](media/me_pixel.png)
