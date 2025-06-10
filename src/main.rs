@@ -83,17 +83,8 @@ fn update(_app: &App, _model: &mut Model, _update: Update) {
     let index = y_scaled * X_SIZE + x_scaled;
     let color = _model.pixels[index as usize].clone();
 
-    let rgb_str = "Selected color: (".to_string()
-        + &*color.r.to_string()
-        + ", "
-        + &*color.g.to_string()
-        + ", "
-        + &*color.b.to_string()
-        + "), Position: ("
-        + &*color.x.to_string()
-        + ", "
-        + &*color.y.to_string()
-        + ")";
+    let rgb_str = format!("Selected Color: rgb({r}, {g}, {b}), Position: xy({x}, {y})",
+                          r = color.r, g = color.g, b = color.b, x = color.x, y = color.y);
     _app.main_window().set_title(rgb_str.as_str());
 }
 
