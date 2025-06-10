@@ -1,5 +1,6 @@
 use image::imageops::FilterType;
 use image::{GenericImageView, ImageReader};
+use nannou::prelude::real::Real;
 use nannou::prelude::*;
 use nannou::rand::prelude::SliceRandom;
 use nannou::rand::thread_rng;
@@ -37,7 +38,7 @@ impl ColorConfig {
     }
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 struct Color {
     r: u8,
     g: u8,
@@ -59,6 +60,11 @@ fn view(app: &App, model: &Model, frame: Frame) {
 }
 
 fn update(_app: &App, _model: &mut Model, _update: Update) {
+    let pressed_mouse = _app.mouse.buttons.left().is_down();
+    if !pressed_mouse {
+        return;
+    }
+
     let pixels = _app.main_window().inner_size_points();
 
     let x_width = pixels.0.abs();
@@ -74,7 +80,21 @@ fn update(_app: &App, _model: &mut Model, _update: Update) {
     let x_scaled = ((x as f64 / x_width as f64) * X_SIZE as f64) as u64;
     let y_scaled = ((y as f64 / y_height as f64) * Y_SIZE as f64) as u64;
 
-    println!("x: {}, y: {}", x_scaled, y_scaled);
+    let index = y_scaled * X_SIZE + x_scaled;
+    let color = _model.pixels[index as usize].clone();
+
+    let rgb_str = "Selected color: (".to_string()
+        + &*color.r.to_string()
+        + ", "
+        + &*color.g.to_string()
+        + ", "
+        + &*color.b.to_string()
+        + "), Position: ("
+        + &*color.x.to_string()
+        + ", "
+        + &*color.y.to_string()
+        + ")";
+    _app.main_window().set_title(rgb_str.as_str());
 }
 
 fn model(_app: &App) -> Model {
